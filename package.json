@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch app.js"
+    "dev": "node --watch app.js",
+    "db:populate": "node database/scripts/populateDB.js",
+    "db:dropAll": "node database/scripts/dropDB.js"
   },
   "repository": {
     "type": "git",
