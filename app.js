@@ -13,6 +13,9 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }))
 app.use("/", homeRouter);
 
+const assetsPath = path.join(__dirname, "public");
+app.use(express.static(assetsPath));
+
 //Getting up the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (err) => {

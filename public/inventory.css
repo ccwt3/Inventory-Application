@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.main__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item__container {
+  display: flex;
+  background-color: red;
+  margin: 10px;
+  width: 40%;
+}

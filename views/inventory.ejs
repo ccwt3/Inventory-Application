@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory</title>
+  <link rel="stylesheet" href="inventory.css">
+</head>
+<body>
+  <main>
+    <h1>Inventory</h1>
+
+    <% if (items.length !== 0) { %>
+      <div class="main__container">
+        <% items.map(item => { %>
+          <div class="item__container">
+            <h3><%= item.seed %></h3>
+            <button>
+              <a href="/inventory/info?id=<%= item.id %>">More info.</a>
+            </button>
+          </div>
+        <% }) %> 
+      </div> 
+    <% } else { %>
+      <p>No items</p>
+    <% } %> 
+  </main>
+</body>
+</html>
