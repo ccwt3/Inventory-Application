@@ -70,11 +70,11 @@ const SQL = `
   -- Inventory table
   CREATE TABLE IF NOT EXISTS inventory (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    seed_id integer REFERENCES seeds_name(id),
-    climate_id integer REFERENCES ideal_climate(id),
-    size_id integer REFERENCES final_size(id),
-    watering_id integer REFERENCES watering(id),
-    light_id integer REFERENCES light_requirements(id)
+    seed_id integer REFERENCES seeds_name(id) ON DELETE CASCADE,
+    climate_id integer REFERENCES ideal_climate(id) ON DELETE SET NULL,
+    size_id integer REFERENCES final_size(id) ON DELETE SET NULL,
+    watering_id integer REFERENCES watering(id) ON DELETE SET NULL,
+    light_id integer REFERENCES light_requirements(id) ON DELETE SET NULL
   );
 
   -- Seed inventory using subqueries (idempotent because catalogs are unique)

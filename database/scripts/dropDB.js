@@ -27,8 +27,9 @@ async function main() {
     console.log("Eliminada");
   } catch (err) {
     console.log(err.message);
-  }
-  finally {
+  } finally {
     await client.end();
   }
 }
+
+main();
