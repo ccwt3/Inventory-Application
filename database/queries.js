@@ -88,7 +88,7 @@ async function updateFlower(cat, id, newCat) {
   const { rows } = await pool.query(
     `
     SELECT * FROM ${cat}
-    WHERE id = $1
+    WHERE id = $1;
   `,
     [newCat]
   );
@@ -110,8 +110,57 @@ async function updateFlower(cat, id, newCat) {
   return rowCount;
 }
 
-//TODO add a CREATE function to add categories(tables) and flowers
+//TODO add a CREATE function to add flowers
+async function addFlower(name, climate, size, watering, light) {
+  // validation
+  const tables = [
+    "ideal_climate",
+    "final_size",
+    "watering",
+    "light_requirements",
+  ];
+  const ids = [climate, size, watering, light];
 
+  const verificationPromises = tables.map(async (table, i) => {
+    const { rows } = await pool.query(
+      `SELECT id FROM ${table} WHERE id = $1 LIMIT 1;`,
+      [ids[i]]
+    );
+    return rows.length === 0;
+  });
+
+  const results = await Promise.all(verificationPromises);
+  const invalidIdsFound = results.filter((isInvalid) => isInvalid);
+
+  if (invalidIdsFound.length > 0) {
+    throw new Error(
+      `Algunos IDs de característica son incorrectos: ${ids.join(", ")}`
+    );
+  }
+
+  //inserting
+  const { rows } = await pool.query(
+    `
+    INSERT INTO seeds_name (seed)
+    VALUES ($1)
+    RETURNING id;
+  `,
+    [name]
+  );
+  const nameId = rows[0].id;
+
+  const insertIntoInventory = await pool.query(
+    `
+    INSERT INTO inventory (seed_id, climate_id, size_id, watering_id, light_id)
+    VALUES
+    ($1, $2, $3, $4, $5)
+    RETURNING id;
+  `,
+    [nameId, climate, size, watering, light]
+  );
+
+  return insertIntoInventory.rows[0].id;
+}
 
 module.exports = {
   getItemInfo,
@@ -119,5 +168,6 @@ module.exports = {
   deleteAllItems,
   deleteCategorie,
   deleteItem,
-  updateFlower
+  updateFlower,
+  addFlower
 };
