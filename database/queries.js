@@ -162,6 +162,26 @@ async function addFlower(name, climate, size, watering, light) {
   return insertIntoInventory.rows[0].id;
 }
 
+async function getAllcategories() {
+  const tables = [
+    "ideal_climate",
+    "final_size",
+    "watering",
+    "light_requirements",
+  ];
+
+  const promises = tables.map(async (table, i) => {
+    const {rows} = await pool.query(`
+      SELECT * 
+      FROM ${table};
+    `)
+    return rows;
+  });
+
+  const results = await Promise.all(promises);
+  return results;
+}
+
 module.exports = {
   getItemInfo,
   getAllItemsName,
@@ -169,5 +189,6 @@ module.exports = {
   deleteCategorie,
   deleteItem,
   updateFlower,
-  addFlower
+  addFlower,
+  getAllcategories
 };

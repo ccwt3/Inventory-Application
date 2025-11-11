@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>information</title>
+  </head>
+  <body>
+    <div class="flower__information">
+      <form action="/inventory/edit?id=<%= flower.id %>" method="post">
+        <select name="climate" id="climate_options">
+          <option value="<%= flower.climate %>" selected>
+            <%= flower.climate %>
+          </option>
+          <% climate.forEach(c => { %> <% if (flower.climate === c) return; %>
+          <option value="<%= c %>"><%= c %></option>
+          <% }) %>
+        </select>
+
+        <select name="size" id="size_options">
+          <option value="<%= flower.size %>" selected>
+            <%= flower.size %>
+          </option>
+          <% size.forEach(c => { %> <% if (flower.size === c) return; %>
+          <option value="<%= c %>"><%= c %></option>
+          <% }) %>
+        </select>
+
+        <select name="water" id="water_options">
+          <option value="<%= flower.consistency %>" selected>
+            <%= flower.consistency %>
+          </option>
+          <% water.forEach(c => { %> <% if (flower.consistency === c) return; %>
+          <option value="<%= c %>"><%= c %></option>
+          <% }) %>
+        </select>
+
+        <select name="sunlight" id="sunlight_options">
+          <option value="<%= flower.sunlight %>" selected>
+            <%= flower.sunlight %>
+          </option>
+          <% climate.forEach(c => { %> <% if (flower.sunlight === c) return; %>
+          <option value="<%= c %>"><%= c %></option>
+          <% }) %>
+        </select>
+
+        <button type="submit">Update</button>
+      </form>
+
+      <h1><%= flower.seed %></h1>
+      <p>Ideal climate: <%= flower.climate %></p>
+      <p>Final size: <%= flower.size %></p>
+      <p>Watering: <%= flower.consistency %></p>
+      <p>Sunlight needed: <%= flower.sunlight %></p>
+    </div>
+  </body>
+</html>

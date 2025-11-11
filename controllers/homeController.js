@@ -45,9 +45,48 @@ async function itemInfoPost(req, res) {
   return res.redirect("/");
 }
 
+async function itemEditingGet(req, res) {
+  const allCat = await db.getAllcategories();
+
+  const climateOptions = allCat[0].map((option) => option.climate);
+  const sizeOptions = allCat[1].map((option) => option.size);
+  const waterOptions = allCat[2].map((option) => option.consistency);
+  const sunOptions = allCat[3].map((option) => option.sunlight);
+
+  const id = req.query.id;
+  if (!id) {
+    res.redirect("/inventory");
+    return;
+  }
+  const item = await db.getItemInfo(id);
+  if (item.length === 0) {
+    res.status(404).send("Articulo no encontrado");
+    return;
+  }
+
+  const flower = item[0];
+  res.render("edit", {
+    flower: flower,
+    climate: climateOptions,
+    size: sizeOptions,
+    water: waterOptions,
+    sunlight: sunOptions,
+  });
+}
+
+function itemEditingPost(req, res) {
+  const id = req.query.id;
+  const bodi = req.body;
+
+  res.redirect("/");
+  return console.log(bodi);
+}
+
 module.exports = {
   homeGet,
   namesGet,
   itemInfoGet,
   itemInfoPost,
+  itemEditingGet,
+  itemEditingPost
 };
