@@ -3,7 +3,7 @@ const pool = require("./pool");
 async function getItemInfo(id) {
   const { rows } = await pool.query(
     `
-    SELECT seed, climate, size, consistency, sunlight
+    SELECT inventory.id ,seed, climate, size, consistency, sunlight
     FROM inventory
     INNER JOIN seeds_name
     ON inventory.seed_id = seeds_name.id

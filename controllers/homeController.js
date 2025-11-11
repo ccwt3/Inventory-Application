@@ -25,8 +25,29 @@ async function itemInfoGet(req, res) {
   res.render("info", { flower });
 }
 
+async function itemInfoPost(req, res) {
+  //todo Agregar token verification
+  const id = req.query.id;
+  const action = req.query.action;
+
+  if (action === "edit") {
+    return res.redirect(`/inventory/edit?id=${id}`);
+  } else if (action === "delete") {
+    const confirmation = await db.deleteItem(id);
+
+    if (confirmation === 1) {
+      return res.redirect("/inventory");
+    } else {
+      throw new Error("Id no reconocido");
+    }
+  }
+
+  return res.redirect("/");
+}
+
 module.exports = {
   homeGet,
   namesGet,
   itemInfoGet,
+  itemInfoPost,
 };
