@@ -27,7 +27,8 @@ async function getAllItemsName() {
     SELECT inventory.id, seed 
     FROM seeds_name
     INNER JOIN inventory
-    ON inventory.seed_id = seeds_name.id;
+    ON inventory.seed_id = seeds_name.id
+    ORDER BY id ASC;
   `);
   return rows;
 }
@@ -75,7 +76,25 @@ async function deleteItem(id) {
   return rowCount;
 }
 
-async function updateFlower(cat, id, newCat) {
+async function updateFlower(cat, id) {
+  const columns = Object.keys(cat);
+  const ids = Object.values(cat);
+  let query;
+  let elpepe;
+  try {
+    query = `
+    UPDATE inventory
+    SET (${columns.join(", ")}) = ROW(${ids.join(", ")})
+    WHERE id = $1;
+  `;
+
+    const { rowCount } = await pool.query(query, [id]);
+    elpepe = rowCount;
+  } catch (err) {
+    console.log(err);
+  }
+
+  /*
   // Verifications
   const allowedCats = ["climate_id", "size_id", "watering_id", "light_id"];
 
@@ -107,7 +126,9 @@ async function updateFlower(cat, id, newCat) {
     [newCat, id]
   );
 
-  return rowCount;
+  return rowCount; */
+
+  return elpepe;
 }
 
 //TODO add a CREATE function to add flowers
@@ -171,10 +192,10 @@ async function getAllcategories() {
   ];
 
   const promises = tables.map(async (table, i) => {
-    const {rows} = await pool.query(`
+    const { rows } = await pool.query(`
       SELECT * 
       FROM ${table};
-    `)
+    `);
     return rows;
   });
 
@@ -190,5 +211,5 @@ module.exports = {
   deleteItem,
   updateFlower,
   addFlower,
-  getAllcategories
+  getAllcategories,
 };

@@ -47,11 +47,10 @@ async function itemInfoPost(req, res) {
 
 async function itemEditingGet(req, res) {
   const allCat = await db.getAllcategories();
-
-  const climateOptions = allCat[0].map((option) => option.climate);
-  const sizeOptions = allCat[1].map((option) => option.size);
-  const waterOptions = allCat[2].map((option) => option.consistency);
-  const sunOptions = allCat[3].map((option) => option.sunlight);
+  const climateOptions = allCat[0]
+  const sizeOptions = allCat[1]
+  const waterOptions = allCat[2]
+  const sunOptions = allCat[3]
 
   const id = req.query.id;
   if (!id) {
@@ -74,12 +73,20 @@ async function itemEditingGet(req, res) {
   });
 }
 
-function itemEditingPost(req, res) {
+async function itemEditingPost(req, res) {
   const id = req.query.id;
   const bodi = req.body;
+  const update = {};
 
-  res.redirect("/");
-  return console.log(bodi);
+  for( const [key, value] of Object.entries(bodi)) {
+    if (!isNaN(value)) {
+      update[key] = value;
+    }
+  }
+
+  const result = await db.updateFlower(update, id);
+  res.redirect("/inventory");
+  return result;
 }
 
 module.exports = {

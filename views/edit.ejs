@@ -8,39 +8,42 @@
   <body>
     <div class="flower__information">
       <form action="/inventory/edit?id=<%= flower.id %>" method="post">
-        <select name="climate" id="climate_options">
-          <option value="<%= flower.climate %>" selected>
+        <select name="climate_id" id="climate_options">
+          <option value="<%= flower.climate %>" selected data-id="1">
             <%= flower.climate %>
           </option>
-          <% climate.forEach(c => { %> <% if (flower.climate === c) return; %>
-          <option value="<%= c %>"><%= c %></option>
+          <% climate.forEach(c => { %> <% if (flower.climate === c.climate)
+          return; %>
+          <option value="<%= c.id %>"><%= c.climate %></option>
           <% }) %>
         </select>
 
-        <select name="size" id="size_options">
+        <select name="size_id" id="size_options">
           <option value="<%= flower.size %>" selected>
             <%= flower.size %>
           </option>
-          <% size.forEach(c => { %> <% if (flower.size === c) return; %>
-          <option value="<%= c %>"><%= c %></option>
+          <% size.forEach(c => { %> <% if (flower.size === c.size) return; %>
+          <option value="<%= c.id %>"><%= c.size %></option>
           <% }) %>
         </select>
 
-        <select name="water" id="water_options">
+        <select name="watering_id" id="watering_options">
           <option value="<%= flower.consistency %>" selected>
             <%= flower.consistency %>
           </option>
-          <% water.forEach(c => { %> <% if (flower.consistency === c) return; %>
-          <option value="<%= c %>"><%= c %></option>
+          <% water.forEach(c => { %> <% if (flower.consistency ===
+          c.consistency) return; %>
+          <option value="<%= c.id %>"><%= c.consistency %></option>
           <% }) %>
         </select>
 
-        <select name="sunlight" id="sunlight_options">
+        <select name="light_id" id="sunlight_options">
           <option value="<%= flower.sunlight %>" selected>
             <%= flower.sunlight %>
           </option>
-          <% climate.forEach(c => { %> <% if (flower.sunlight === c) return; %>
-          <option value="<%= c %>"><%= c %></option>
+          <% sunlight.forEach(c => { %> <% if (flower.sunlight === c.sunlight)
+          return; %>
+          <option value="<%= c.id %>"><%= c.sunlight %></option>
           <% }) %>
         </select>
 
