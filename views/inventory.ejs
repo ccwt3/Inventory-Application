@@ -10,6 +10,7 @@
   <main>
     <h1>Inventory</h1>
 
+    <button><a href="/inventory/create">Add</a></button>
     <% if (items.length !== 0) { %>
       <div class="main__container">
         <% items.map(item => { %>
@@ -23,7 +24,8 @@
       </div> 
     <% } else { %>
       <p>No items</p>
-    <% } %> 
+    <% } %>
+
   </main>
 </body>
 </html>

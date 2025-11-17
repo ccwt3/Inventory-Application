@@ -93,41 +93,7 @@ async function updateFlower(cat, id) {
   } catch (err) {
     console.log(err);
   }
-
-  /*
-  // Verifications
-  const allowedCats = ["climate_id", "size_id", "watering_id", "light_id"];
-
-  if (!allowedCats.includes(cat)) {
-    throw new Error(`${cat} is not allowed`);
-  } else if (!Number.isInteger(newCat)) {
-    throw new Error(`You can only add numbers`);
-  }
-
-  const { rows } = await pool.query(
-    `
-    SELECT * FROM ${cat}
-    WHERE id = $1;
-  `,
-    [newCat]
-  );
-
-  if (rows.length === 0) {
-    throw new Error(`${newCat} is not a valid ID`);
-  }
-
-  // update part
-  const { rowCount } = await pool.query(
-    `
-    UPDATE inventory
-    SET ${cat} = $1
-    WHERE id = $2;
-  `,
-    [newCat, id]
-  );
-
-  return rowCount; */
-
+  
   return elpepe;
 }
 

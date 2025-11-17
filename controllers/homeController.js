@@ -47,10 +47,10 @@ async function itemInfoPost(req, res) {
 
 async function itemEditingGet(req, res) {
   const allCat = await db.getAllcategories();
-  const climateOptions = allCat[0]
-  const sizeOptions = allCat[1]
-  const waterOptions = allCat[2]
-  const sunOptions = allCat[3]
+  const climateOptions = allCat[0];
+  const sizeOptions = allCat[1];
+  const waterOptions = allCat[2];
+  const sunOptions = allCat[3];
 
   const id = req.query.id;
   if (!id) {
@@ -78,7 +78,7 @@ async function itemEditingPost(req, res) {
   const bodi = req.body;
   const update = {};
 
-  for( const [key, value] of Object.entries(bodi)) {
+  for (const [key, value] of Object.entries(bodi)) {
     if (!isNaN(value)) {
       update[key] = value;
     }
@@ -89,11 +89,41 @@ async function itemEditingPost(req, res) {
   return result;
 }
 
+async function createItemGet(req, res) {
+  const allCat = await db.getAllcategories();
+  const climateOptions = allCat[0];
+  const sizeOptions = allCat[1];
+  const waterOptions = allCat[2];
+  const sunOptions = allCat[3];
+
+  res.render("create", {
+    climate: climateOptions,
+    size: sizeOptions,
+    water: waterOptions,
+    sunlight: sunOptions,
+  });
+}
+
+async function createItemPost(req, res) {
+  const body = req.body;
+  const name = body.Name;
+  const climate = body.climate_id;
+  const size = body.size_id;
+  const watering = body.watering_id;
+  const light = body.light_id;
+
+  const id = await db.addFlower(name, climate, size, watering, light);
+
+  return res.redirect(`/inventory/info?id=${id}`);
+}
+
 module.exports = {
   homeGet,
   namesGet,
   itemInfoGet,
   itemInfoPost,
   itemEditingGet,
-  itemEditingPost
+  itemEditingPost,
+  createItemGet,
+  createItemPost,
 };

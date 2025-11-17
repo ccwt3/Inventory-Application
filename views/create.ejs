@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>create</title>
+</head>
+<body>
+  <form action="/inventory/create" method="post">
+    <input type="text" name="Name">
+    
+    <select name="climate_id" id="climate_options">
+      <% climate.forEach(c => { %>
+      <option value="<%= c.id %>"><%= c.climate %></option>
+      <% }) %>
+    </select>
+
+    <select name="size_id" id="size_options">
+      <% size.forEach(c => { %>
+      <option value="<%= c.id %>"><%= c.size %></option>
+      <% }) %>
+    </select>
+
+    <select name="watering_id" id="watering_options">
+      <% water.forEach(c => { %>
+      <option value="<%= c.id %>"><%= c.consistency %></option>
+      <% }) %>
+    </select>
+
+    <select name="light_id" id="sunlight_options">
+      <% sunlight.forEach(c => { %>
+      <option value="<%= c.id %>"><%= c.sunlight %></option>
+      <% }) %>
+    </select>
+
+    <button type="submit">Create</button>
+  </form>
+</body>
+</html>
