@@ -26,13 +26,13 @@ async function itemInfoGet(req, res) {
 }
 
 async function itemInfoPost(req, res) {
-  //todo Agregar token verification
   const id = req.query.id;
   const action = req.query.action;
+  const token = req.query.token;
 
   if (action === "edit") {
     return res.redirect(`/inventory/edit?id=${id}`);
-  } else if (action === "delete") {
+  } else if (action === "delete" && token === process.env.DB_TOKEN) {
     const confirmation = await db.deleteItem(id);
 
     if (confirmation === 1) {
