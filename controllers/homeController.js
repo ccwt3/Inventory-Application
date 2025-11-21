@@ -40,6 +40,22 @@ async function itemInfoPost(req, res) {
     } else {
       throw new Error("Id no reconocido");
     }
+  } else if (!(token === process.env.DB_TOKEN)) {
+    res.send(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Error de Token</title>
+            <meta http-equiv="refresh" content="2.5; url=/">
+        </head>
+        <body>
+            <h1>⛔️ ¡You dont have the right token!</h1>
+            <p>Going home in 2.5 seconds...</p>
+        </body>
+        </html>
+    `);
+
+    return;
   }
 
   return res.redirect("/");
